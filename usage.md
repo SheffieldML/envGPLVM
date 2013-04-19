@@ -10,35 +10,38 @@ group: navigation
 
 ### Basic usage
 PANAMA includes a script that lets you access the basic functionalities without too much pain.
+
 After installing PANAMA, from a terminal, run:
 
 `$ panama expression_data.csv snp_data.csv`
 
 Where expression_data.csv is a Comma Separated Values file containing the gene expression data in the following format
 
-         sample1, sample2, ..., sampleN
-  gene1  value ,  value , ...,  value
-  gene2  value ,  value , ...,  value
-  ...
-  geneN
+                sample1, sample2, ..., sampleN
+         gene1  value ,  value , ...,  value
+         gene2  value ,  value , ...,  value
+         ...
+         geneN
+
 and snp_data.csv contains the SNP data encoded as [0,1,2] in the following format
 
-        sample1, sample2, ..., sampleN
-  SNP1  value ,  value , ...,  value
-  SNP2  value ,  value , ...,  value
-  ...
-  SNPQ
+              sample1, sample2, ..., sampleN 
+        SNP1  value ,  value , ...,  value
+        SNP2  value ,  value , ...,  value
+        ...
+        SNPQ
 
 If you need to load data in another format, just contact us.
-Optional arguments: 
-_-p num_processes_
+
+##### Optional arguments: 
+* *-p num_processes*
 in order to facilitate the analysis of larger datasets, PANAMA implements a cluster interface that can work seamlessly on the local machine, on a group of machines on the local network (via SSH), on a local cluster (via SunGrid), or on Amazon EC2 (Elastic Cloud Computing). In order to use this feature, you need to have an ipcluster instance running. If you have Ipython 0.12 installed on your machine, running PANAMA on multiple cores on the local machine just requires a ipcluster start from the command line.
 For ipython 0.10, the equivalent command would be ipcluster local -n num_processes. PANAMA automatically detects the Ipython version, so no further input is necessary. Read the Ipython documentation for more informations on how to run on networked machines, on clusters and on Amazon EC2
 
-_-d output_directory_
+* *-d output_directory*
 specify an output directory (default: the current directory)
 
-_-l logging_level_
+* *-l logging_level*
 how much output do you want from PANAMA? There are 4 possible choices: debug, info, warning, error. The default level is "info", so you will get a good idea of what PANAMA is actually doing in any given moment.
 
 
