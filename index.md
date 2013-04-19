@@ -30,7 +30,7 @@ Once learnt, these variables can be used in genetic analyses to investigate inte
 
 * * *
 
-## LICENSE
+#### LICENSE
 
 If you want to use PANAMA or LIMMI for non-commercial purposes, the code is available under a modified GPL v2 license. The modifications are:
 
