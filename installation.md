@@ -1,6 +1,6 @@
 ---
 layout: page
-title: PANAMA/LIMMI installation and data
+title: Installation
 tagline: 
 group: navigation
 ---
