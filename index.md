@@ -25,6 +25,8 @@ LIMMI is a novel approach to detect genotype-environment interactions with unmea
 factors, and is able to recover the unmeasured environmental state solely from gene expression data.
 Once learnt, these variables can be used in genetic analyses to investigate interactions between environmental factors and genotype with a regulatory effect on gene expression levels.
 
+
+
 **PANAMA and LIMMI share the same codebase, and it's possible to switch between them by passing the --limmi command line argument**
 
 
