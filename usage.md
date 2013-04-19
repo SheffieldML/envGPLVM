@@ -1,6 +1,6 @@
 ---
 layout: page
-title: PANAMA/LIMMI usage
+title: Usage
 tagline: 
 group: navigation
 ---
