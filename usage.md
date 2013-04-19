@@ -2,6 +2,7 @@
 layout: page
 title: PANAMA/LIMMI usage
 tagline: 
+group: navigation
 ---
 {% include JB/setup %}
 
