@@ -6,9 +6,7 @@ group: navigation
 ---
 {% include JB/setup %}
 
-## Usage 
-
-### Basic usage
+### Basic
 PANAMA includes a script that lets you access the basic functionalities without too much pain.
 
 After installing PANAMA, from a terminal, run:
@@ -46,7 +44,7 @@ how much output do you want from PANAMA? There are 4 possible choices: debug, in
 
 
 
-### Advanced usage
+### Advanced
 Some of the features of PANAMA can't be accessed using the simple panama script provided or need further setup. 
 
 Here's a list of features that have been implemented and can be accessed through the python API:
