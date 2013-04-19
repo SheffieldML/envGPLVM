@@ -18,6 +18,9 @@ Hidden confounding factors, such as unobserved covariates or unknown subtle envi
 
 
 ### LIMMI
+
+<div style="float: left; margin-right:15px"><img src="assets/images/limmi.png" /></div> 
+
 LIMMI is a novel approach to detect genotype-environment interactions with unmeasured environmental
 factors, and is able to recover the unmeasured environmental state solely from gene expression data.
 Once learnt, these variables can be used in genetic analyses to investigate interactions between environmental factors and genotype with a regulatory effect on gene expression levels.
