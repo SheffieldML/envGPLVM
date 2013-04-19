@@ -10,7 +10,7 @@ PANAMA and LIMMI are probabilistic models that account for confounding and envir
 
 ### PANAMA
 
-<div style="float: left; margin-right:100px"><img src="assets/images/expr_cov.png" /></div> 
+<div style="float: left; margin-right:15px"><img src="assets/images/expr_cov.png" /></div> 
 
 Hidden confounding factors, such as unobserved covariates or unknown subtle environmental perturbations can create spurious false associations or mask real genetic association signals. In contrast to previous methods, PANAMA learns hidden factors jointly with the effect of prominent genetic regulators. As a result, this new model can more accurately distinguish true genetic association signals from confounding variation.
 
