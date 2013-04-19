@@ -47,18 +47,23 @@ how much output do you want from PANAMA? There are 4 possible choices: debug, in
 
 
 ### Advanced usage
-Some of the features of PANAMA can't be accessed using the simple panama script provided or need further setup. Here's a list of features that have been implemented and can be accessed through the python API:
+Some of the features of PANAMA can't be accessed using the simple panama script provided or need further setup. 
 
-imputation of missing genotypes (available from panama.utilities.imputation)
-threading configuration for the Intel Math Kernel Library ™(available from panama.utilities.MKL)
-reading/writing files in HDF5 (available from panama.utilities.io_wrapper)
-storing intermediate results in HDF5 (available from panama.core.testing)
+Here's a list of features that have been implemented and can be accessed through the python API:
+
+* imputation of missing genotypes (available from panama.utilities.imputation)
+* threading configuration for the Intel Math Kernel Library ™(available from panama.utilities.MKL)
+* reading/writing files in HDF5 (available from panama.utilities.io_wrapper)
+* storing intermediate results in HDF5 (available from panama.core.testing)
+
+
 If you want to call PANAMA directly from python, just take a look at the PANAMA function in panama.core.run. The expected arguments are:
 
-expr (required) an NxD numpy array, where N is the number of samples and D is the number of genes.
-snps (required) an NxQ numpy array, where N is the number of samples and Q is the number of SNPs.
-tf_correction = False [True|False] remove broad genetic effects? This will result in more uniform pvalues, but it will also results in an overcorrection of the data (see the paper for a more extended explanation).
-pop_struct = False [True|NxN numpy array] if pop_struct = True, a population structure covariance matrix will be calculated using the genotypes. You can explicitly pass your own population structure covariance matrix as a NxN numpy array.
-parallel = True [True|False] run PANAMA in parallel. If True, please also pass the desired number of jobs to run as jobs = num_jobs.
-statistics = False [True|False] print some statistics like genomic control, number of significant qvalues, and so on..
+* expr (required) an NxD numpy array, where N is the number of samples and D is the number of genes.
+* snps (required) an NxQ numpy array, where N is the number of samples and Q is the number of SNPs.
+* tf_correction = False [True|False] remove broad genetic effects? This will result in more uniform pvalues, but it will also results in an overcorrection of the data (see the paper for a more extended explanation).
+* pop_struct = False [True|NxN numpy array] if pop_struct = True, a population structure covariance matrix will be calculated using the genotypes. You can explicitly pass your own population structure covariance matrix as a NxN numpy array.
+* parallel = True [True|False] run PANAMA in parallel. If True, please also pass the desired number of jobs to run as jobs = num_jobs.
+* statistics = False [True|False] print some statistics like genomic control, number of significant qvalues, and so on..
+
 If you don't want to hack your way around python, just contact us. We can make some functionalities available from the main script.
