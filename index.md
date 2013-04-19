@@ -5,10 +5,13 @@ tagline:
 ---
 {% include JB/setup %}
 
+
+
 ![Alt text](assets/images/expr_cov.png) PANAMA and LIMMI are probabilistic models that account for confounding and environmental factors in eQTL studies.
 
 ### PANAMA
-![Alt text](assets/images/expr_cov.png) Hidden confounding factors, such as unobserved covariates or unknown subtle environmental perturbations can create spurious false associations or mask real genetic association signals. In contrast to previous methods, PANAMA learns hidden factors jointly with the effect of prominent genetic regulators. As a result, this new model can more accurately distinguish true genetic association signals from confounding variation.
+<div style="float: right"><img src="assets/images/expr_cov.png" /></div> Hidden confounding factors, such as unobserved covariates or unknown 
+subtle environmental perturbations can create spurious false associations or mask real genetic association signals. In contrast to previous methods, PANAMA learns hidden factors jointly with the effect of prominent genetic regulators. As a result, this new model can more accurately distinguish true genetic association signals from confounding variation.
 
 [N. Fusi,O. Stegle and N. D. Lawrence, _"Joint modelling of confounding factors and prominent genetic regulators provides increased accuracy in genetical genomics studies"_, PLoS Computational Biology, 2012](http://www.ploscompbiol.org/article/info:doi/10.1371/journal.pcbi.1002330)
 
