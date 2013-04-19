@@ -1,7 +1,7 @@
 ---
 layout: page
-title: envGPLVM
-tagline: probabilistic models for genetical genomics
+title: PANAMA/LIMMI
+tagline: 
 ---
 {% include JB/setup %}
 
