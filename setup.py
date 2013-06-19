@@ -5,7 +5,7 @@ from setuptools import Extension
 from Cython.Distutils import build_ext
 from setuptools import setup
 
-version_number = '0.53'
+version_number = '0.54'
 compile_flags = ["-O3"]
 
 if sys.platform != "darwin":
