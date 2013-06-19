@@ -37,10 +37,16 @@ if __name__ == "__main__":
     gene_names = expr.index
     snp_names = snps.index
 
+    cov = options.cov
+    if cov is not None:
+        cov = pandas.read_csv(cov, header = 0, index_col = 0)
+        assert np.all(expr.columns == cov.columns)
+        cov = cov.T.values
+
     Y = expr.T.values
     S = snps.T.values
 
-    conf = panama.core.ConfounderGPLVM(Y, S, covariates=options.cov, population_structure=options.pop,
+    conf = panama.core.ConfounderGPLVM(Y, S, covariates=cov, population_structure=options.pop,
                                        num_factors=options.dim, FDR_assoc=options.fdr)
 
 
