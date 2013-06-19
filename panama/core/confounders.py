@@ -33,7 +33,7 @@ def gs(X):
     return Y
 
 class ConfounderGPLVM(object):
-    def __init__(self, expr, snps, covariates=None, population_structure=None, associations=True, interactions=False, num_factors=None, max_iterations=20, max_num_factors=30):
+    def __init__(self, expr, snps, covariates=None, population_structure=None, associations=True, interactions=False, num_factors=None, max_iterations=20, max_num_factors=30, FDR_assoc = 0.2):
 
         self.Y = expr
         self.S = snps
@@ -71,7 +71,7 @@ class ConfounderGPLVM(object):
         self.X = self.model.X[:, :self.Q]
         self.update_inputs()
         self.model.ensure_default_constraints()
-        self.FDR_associations = 0.2
+        self.FDR_associations = FDR_assoc
         self.FDR_interactions = 0.2
         self.max_iterations = max_iterations
         self.panama_mode = associations

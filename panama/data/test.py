@@ -6,11 +6,7 @@ import pandas
 import cPickle as pickle
 from sklearn import metrics
 import pylab as plt
-# snps = pandas.read_csv('sim_snps.csv', index_col=0).T
-# expr = pandas.read_csv('sim_expr.csv', index_col=0).T
-# TODO: check sample alignment, ecc
-from panama.utilities.ROC import auroc
-from panama.core import run
+# from panama.core import run
 
 expr = pickle.load(open('/mnt/nicolo_storage/limmi/simulation/results/expr.pickle', 'r'))
 snps = pickle.load(open('/mnt/nicolo_storage/limmi/simulation/results/snps.pickle', 'r'))
@@ -18,7 +14,7 @@ truth = pickle.load(open('/mnt/nicolo_storage/limmi/simulation/results/true_asso
 cov = np.ones((expr.shape[0], 1))
 
 
-conf = panama3.core.ConfounderGPLVM(expr, snps, covariates=cov, population_structure=None, num_factors=5)
+conf = panama.core.ConfounderGPLVM(expr, snps, covariates=cov, population_structure=None, num_factors=5)
 conf.fit()
 qv, pv = conf.association_scan()
 fpr, tpr, thresholds = metrics.roc_curve(truth.flatten(), -pv.flatten())
