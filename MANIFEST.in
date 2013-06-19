@@ -1,3 +1,4 @@
+include MANIFEST.in
 include *.txt
 recursive-include panama/core/lmm/Eigen *
 recursive-include panama/core/lmm/utils/ * 
@@ -5,3 +6,4 @@ include panama/core/lmm/lmm.h
 include panama/core/lmm/lmm.cpp
 include panama/core/lmm/lmm.pyx
 include panama/core/lmm/c_lmm.cpp
+include panama/core/lmm/utils/*.h
