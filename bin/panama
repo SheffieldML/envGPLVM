@@ -4,6 +4,7 @@ import numpy as np
 import pandas
 import panama
 import os
+import sys
 
 if __name__ == "__main__":
     usage = "usage: %prog [options] gene_expr_file snp_file"
