@@ -21,6 +21,6 @@ install:
   - pip install sphinx 
   - pip install nose
   - pip install . --use-mirrors
-# command to run tests, e.g. python setup.py test
+
 script: 
   - nosetests panama/tests
