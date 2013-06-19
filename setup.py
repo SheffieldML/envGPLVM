@@ -1,8 +1,9 @@
 import os, sys, pdb, numpy
 import distutils.core
-from distutils.core import setup
-from distutils.extension import Extension
+# from distutils.core import setup
+from setuptools import Extension
 from Cython.Distutils import build_ext
+from setuptools import setup
 
 version_number = '0.5'
 compile_flags = ["-O3"]
@@ -13,7 +14,7 @@ if sys.platform != "darwin":
 
 ext_modules = [Extension(
     name="panama.core.lmm.lmm",
-    language="c++", 
+    language="c++",
     sources=["panama/core/lmm/lmm.pyx", # to re-generate the cpp from the pyx just uncomment this line
 	     # "panama/core/lmm/lmm.cpp",   # and comment this one
 	     "panama/core/lmm/c_lmm.cpp",
@@ -36,7 +37,7 @@ setup(name = 'panama',
       packages = ['panama.core', 'panama.core.lmm', 'panama.data'],
       package_data = {'': ['*.csv', '*.pdf', '*.txt']},
       # scripts = ['bin/panama'],
-      py_modules = ['panama.__init__'],      
+      py_modules = ['panama.__init__'],
       cmdclass = {'build_ext': build_ext, 'inplace': True},
       ext_modules = ext_modules,
       install_requires = ['numpy >= 1.6',
