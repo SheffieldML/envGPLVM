@@ -168,7 +168,7 @@ class ConfounderGPLVM(object):
             m.constrain_fixed('confounders', 0.0)
         m.constrain_fixed('X')
         m.ensure_default_constraints()
-        m.optimize('bfgs', messages=0)
+        self.optimize(update_inputs=False)
         return m.kern.K(m.X)
 
     def Q_init(self):
@@ -294,9 +294,24 @@ class ConfounderGPLVM(object):
 
         return Nint_new
 
-    def optimize(self):
-        self.update_inputs()
-        self.model.optimize('bfgs', messages=0)
+    def optimize(self, update_inputs=True):
+        if update_inputs:
+            self.update_inputs()
+        success = False
+        max_tries = 10
+        tries = 0
+
+        while not success:
+            if tries > max_tries:
+                break
+            try:
+                self.model.optimize('bfgs', messages=0)
+            except Exception:
+                tries+=1
+                continue
+
+            success = True
+
 
     def fit(self):
         print("Training PANAMA with an association FDR of %.2f" % self.FDR_associations)
