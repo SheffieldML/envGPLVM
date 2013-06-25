@@ -295,18 +295,20 @@ class ConfounderGPLVM(object):
         return Nint_new
 
     def optimize(self, update_inputs=True):
-        if update_inputs:
-            self.update_inputs()
         success = False
         max_tries = 10
         tries = 0
 
         while not success:
+            if update_inputs:
+                self.update_inputs()
+
             if tries > max_tries:
                 break
             try:
                 self.model.optimize('bfgs', messages=0)
             except Exception:
+                self.model.randomize()
                 tries+=1
                 continue
 

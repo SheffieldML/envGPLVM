@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     parser.add_option('-P', '--population-structure', dest='pop', action='store_true', help='Account for population structure (kinship matrix)')
 
-    parser.add_option('-a', '--fdr-assoc', dest='fdr', action='store', type='float', default='0.2', help='FDR cutoff for PANAMA')
+    parser.add_option('-a', '--fdr-assoc', dest='fdr', action='store', type='float', default='0.05', help='FDR cutoff for PANAMA')
 
     (options, args) = parser.parse_args()
 
