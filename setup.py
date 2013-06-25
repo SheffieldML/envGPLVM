@@ -15,15 +15,14 @@ if sys.platform != "darwin":
 ext_modules = [Extension(
     name="panama.core.lmm.lmm",
     language="c++",
-    sources=["panama/core/lmm/lmm.pyx", # to re-generate the cpp from the pyx just uncomment this line
-	     # "panama/core/lmm/lmm.cpp",   # and comment this one
+sources=[# "panama/core/lmm/lmm.pyx", # to re-generate the cpp from the pyx just uncomment this line
+	     "panama/core/lmm/lmm.cpp",   # and comment this one
 	     "panama/core/lmm/c_lmm.cpp",
 	     "panama/core/lmm/utils/Gamma.cpp",
 	     "panama/core/lmm/utils/FisherF.cpp",
 	     "panama/core/lmm/utils/Beta.cpp",
 	     "panama/core/lmm/utils/MathFunctions.cpp",
-	     "panama/core/lmm/utils/BrentC.cpp"
-             ],
+	     "panama/core/lmm/utils/BrentC.cpp"],
     include_dirs = [numpy.get_include()],
     extra_compile_args = compile_flags,
     )]
