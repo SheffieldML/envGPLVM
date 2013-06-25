@@ -1,5 +1,5 @@
 import os, sys, pdb, numpy
-import distutils.core
+# import distutils.core
 # from distutils.core import setup
 from setuptools import Extension
 from Cython.Distutils import build_ext
