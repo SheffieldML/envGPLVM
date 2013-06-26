@@ -3,6 +3,7 @@ import scipy as sp
 import GPy
 import testing
 import qvalue
+from GPy.util.linalg import PCA
 
 def scaleK(K, verbose=False):
     """scale covariance K such that it explains unit variance"""
@@ -33,7 +34,7 @@ def gs(X):
     return Y
 
 class ConfounderGPLVM(object):
-    def __init__(self, expr, snps, covariates=None, population_structure=None, associations=True, interactions=False, num_factors=None, max_iterations=20, max_num_factors=30, FDR_assoc = 0.2):
+    def __init__(self, expr, snps, covariates=None, population_structure=None, associations=True, interactions=False, num_factors=None, max_iterations=20, max_num_factors=30, FDR_assoc = 0.2, restarts=None):
 
         self.Y = expr
         self.S = snps
@@ -76,6 +77,7 @@ class ConfounderGPLVM(object):
         self.max_iterations = max_iterations
         self.panama_mode = associations
         self.limmi_mode = interactions
+        self.restarts = restarts
 
         print self
 
@@ -169,7 +171,7 @@ class ConfounderGPLVM(object):
         m.constrain_fixed('X')
         m.ensure_default_constraints()
         self.optimize(update_inputs=False)
-        return m.kern.K(m.X)
+        return m.kern.K(m.X) + np.eye(self.N) * m['noise'][0]
 
     def Q_init(self):
         """
@@ -209,19 +211,26 @@ class ConfounderGPLVM(object):
 
     def panama_step(self):
         X = self.model.X.copy()
-        X = np.asarray(gs(X.T)).T
-        X = np.linalg.qr(X)[0]
+        # X = np.asarray(gs(X.T)).T
+        # X = np.linalg.qr(X)[0]
         X -= X.mean(axis = 0)
+        X = PCA(X, X.shape[1])[0]
+        X -= X.mean(axis=0)
         X /= X.std(axis=0)
-        K = self.kernel_testing(genetics=True, confounders=False)
+        K = self.kernel_testing(genetics=False, confounders=False)
+        K = scaleK(K)
+        if len(self.candidate_associations) != 0:
+            covs = self.S_centered[:, self.candidate_associations].copy()
+        else:
+            covs = None
 
-        pv = testing.interface(self.S_centered, X, K, model = "LMM",
+        pv = testing.interface(self.S_centered, X[:, :self.Q], K, covs=covs, model = "LMM",
                                parallel = False, jobs = 0,
                                file_directory=None)[0] # TODO cleanup
 
 
         # Number of tests conducted
-        num_tests = X.shape[1]*self.S.shape[1]
+        num_tests = X.shape[1]*self.S.shape[1]*self.iteration
         qv = qvalue.estimate(pv, m=num_tests)
 
         # Set the qvalue of the current associations to 1
@@ -230,6 +239,7 @@ class ConfounderGPLVM(object):
         # Greedily construct addition set by adding the BEST (lowest qv) SNP for each factor
         # (if significant)
         new_candidates = []
+
         for i in xrange(qv.shape[1]):
             i_best = qv[:,i].argmin()
             qv_best = qv[:,i].min()
@@ -243,8 +253,10 @@ class ConfounderGPLVM(object):
         nc_old = len(self.candidate_associations)
         self.candidate_associations.extend(new_candidates)
         nc = len(self.candidate_associations)
-
         dl = nc-nc_old
+
+        assert len(np.unique(self.candidate_associations)) == len(self.candidate_associations)
+
         return dl
 
     def constrain_nonlatent(self):
@@ -305,12 +317,16 @@ class ConfounderGPLVM(object):
 
             if tries > max_tries:
                 break
-            try:
-                self.model.optimize('bfgs', messages=0)
-            except Exception:
-                self.model.randomize()
-                tries+=1
-                continue
+            if self.restarts is None:
+                try:
+                    self.model.optimize('bfgs', messages=0)
+                except Exception:
+                    self.model.randomize()
+                    tries+=1
+                    continue
+            else:
+                self.model.optimization_runs = []
+                self.model.optimize_restarts(self.restarts, verbose=True, optimizer='bfgs')
 
             success = True
 
@@ -325,6 +341,8 @@ class ConfounderGPLVM(object):
 
         train = True
         while train and it < self.max_iterations:
+            self.iteration = it + 1
+
             print "Iteration %d" % it
             associations_added, interactions_added = 0, 0
             if it == 0:
