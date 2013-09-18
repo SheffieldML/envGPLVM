@@ -148,6 +148,7 @@ class ConfounderGPLVM(object):
             else:
                 K = self.pop
 
+            self.Kpop = K.copy()
             kernel = GPy.kern.kern.add(kernel, GPy.kern.fixed(1, K), tensor=True)
             kernel.parts[-1].name = 'popstruct'
             input_dim += 1
@@ -203,13 +204,23 @@ class ConfounderGPLVM(object):
         qval = qvalue.estimate(pval)
         return qval, pval
 
+    def get_residuals(self):
+        """
+        Removes confouding effects and returns the residuals
+
+        """
+
+        # This is quite hacky. GPy seem to have a shape bug in kern, so for now
+        # I'm dealing with this by computing the least squares solution.
+        W = np.linalg.lstsq(self.X, self.Y)[0]
+        XW = np.dot(self.X, W)
+        return self.Y-XW
+
+
     def interaction_scan(self):
         pass
 
     def get_latent(self, pca_rotation=True):
-        pass
-
-    def panama_step(self):
         X = self.model.X.copy()
         # X = np.asarray(gs(X.T)).T
         # X = np.linalg.qr(X)[0]
@@ -217,6 +228,11 @@ class ConfounderGPLVM(object):
         X = PCA(X, X.shape[1])[0]
         X -= X.mean(axis=0)
         X /= X.std(axis=0)
+        return X
+
+
+    def panama_step(self):
+        X = self.get_latent()
         K = self.kernel_testing(genetics=False, confounders=False)
         K = scaleK(K)
         if len(self.candidate_associations) != 0:
@@ -270,12 +286,12 @@ class ConfounderGPLVM(object):
         self.model.ensure_default_constraints()
 
     def limmi_step(self):
-        K = np.eye(self.N) #TODO # self.Kpop
+        if self.Kpop is None:
+            K = np.eye(self.N)
+        else:
+            K = self.Kpop.copy()
 
-        # get latent factors and rotate to PCA
-        X = self.getLatent(ard_reweight = True, pca_rotation = True, rotate_varimax = False)
-
-        inter = interaction_scan.get_candidate_interactions(self.pheno, self.snps_raw, X, K,
+        inter = interaction_scan.get_candidate_interactions(self.Y, self.S, X, K,
                                                             interactions_iter = self.interactions_iter,
                                                             pv_max_stored = self.pv_max_stored,
                                                             topn_interactions = self.topn_interactions,
