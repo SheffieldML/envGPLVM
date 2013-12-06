@@ -216,7 +216,6 @@ class ConfounderGPLVM(object):
         XW = np.dot(self.X, W)
         return self.Y-XW
 
-
     def interaction_scan(self):
         pass
 

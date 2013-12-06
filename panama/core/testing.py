@@ -12,13 +12,8 @@ import numpy as N
 import scipy.stats as st
 import copy
 import testing_core
-
-try:
-    from IPython.kernel import client
-    ipy_version = 0.10
-except ImportError:
-    from IPython.parallel import Client as client
-    ipy_version = 0.12
+from IPython.parallel import Client as client
+ipy_version = 0.12 # or greater
 
 tc_clients = None
 
@@ -208,23 +203,23 @@ def start_engines(jobs):
     """
 
     global tc_clients
-    
+   
     if ipy_version == 0.10:
-	tc = client.TaskClient()
-	mec = client.MultiEngineClient()
-	eng_ids = mec.get_ids()
+        tc = client.TaskClient()
+        mec = client.MultiEngineClient()
+        eng_ids = mec.get_ids()
     else:
-	if tc_clients == None:
-	    tc = client()
-	    eng_ids = tc.ids
-	    tc_clients = tc
-	else:
-	    tc = tc_clients
-	    eng_ids = tc.ids
-	
+        if tc_clients is None:
+            tc = client()
+            eng_ids = tc.ids
+            tc_clients = tc
+        else:
+            tc = tc_clients
+            eng_ids = tc.ids
+
     #reset engines
     #mec.reset()
-    assert eng_ids > 0, "No engine started"	
+    assert eng_ids > 0, "No engine started"
     #assert eng_ids > jobs, "Not enough engines for the number of jobs required"
 
     return tc, eng_ids

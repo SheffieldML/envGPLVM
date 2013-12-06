@@ -65,7 +65,7 @@ int main (int argc, char * const argv[]) {
 		PMatrix LOD(n_pheno,n_snps);
 
 
-		train_interactions(LOD,X,Y,K,C,I,0,-1.,1.,100,-5,5,false,true);
+		//train_interactions(LOD,X,Y,K,C,I,0,-1.,1.,100,-5,5,false,true);
 		std::cout <<"\n\nPV:\n"<< LOD;
 		printf("\n\nFisher:%.4f",FisherF::Cdf(0.1,1.0,1.0));
 
