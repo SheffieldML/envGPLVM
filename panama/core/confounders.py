@@ -3,7 +3,7 @@ import scipy as sp
 import GPy
 import testing
 import qvalue
-from GPy.util.linalg import PCA
+from GPy.util.linalg import pca
 
 def scaleK(K, verbose=False):
     """scale covariance K such that it explains unit variance"""
@@ -224,7 +224,7 @@ class ConfounderGPLVM(object):
         # X = np.asarray(gs(X.T)).T
         # X = np.linalg.qr(X)[0]
         X -= X.mean(axis = 0)
-        X = PCA(X, X.shape[1])[0]
+        X = pca(X, X.shape[1])[0]
         X -= X.mean(axis=0)
         X /= X.std(axis=0)
         return X
